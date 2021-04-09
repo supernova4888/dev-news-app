@@ -10,6 +10,7 @@ services:
     # credentials - creates admin/super user
     environment:
       # defines a different name for the default database. Default if not specified: value of POSTGRES_USER
+      # TODO @name of server <devnews> is in SYNC with application.properties (docker).
       - POSTGRES_DB=devnews
       # used in conjunction with POSTGRES_PASSWORD to set a user and its password. Default if not specified: "postgres"
       - POSTGRES_USER=demo_user
@@ -17,6 +18,7 @@ services:
       - POSTGRES_PASSWORD=demo_pass
     ports:
       # port on our pc (outside container): port used inside docker container (5432 commonly used for db)
+      # TODO local host is SYNC with application.properties (docker).
       - "5430:5432"
     volumes:
       # enables us to save data
