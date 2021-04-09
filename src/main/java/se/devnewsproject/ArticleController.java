@@ -30,9 +30,6 @@ public class ArticleController {
 
     // todo : i didnt do a docker exec command - do i need to connect the database? only if you want to check
 
-    // get specific article based on the provided id
-    
-
     // post a new article
     // 1. call spring Class 'ResponseEntity'
     // todo practice: I just remembered the 'save' part.
@@ -46,9 +43,32 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }
 
+    // get specific article based on the provided id
+    @GetMapping ("/{id}")
+    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.ok(article);
+    }
+
+    // update the given article
+    // todo: test it
+    @PutMapping ("/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
+        articleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        updatedArticle.setId(id);
+        Article article = articleRepository.save(updatedArticle);
+        return ResponseEntity.ok(article);
+    }
+
+    // delete the given article
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<Article> deleteArticle(@PathVariable Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        articleRepository.delete(article);
+        return ResponseEntity.ok(article);
+    }
+
 
 }
 
-    // update the given article
 
-    // delete the given article
