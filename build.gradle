@@ -26,7 +26,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // JPA is what contains the 'hibernate' tool, which helps to map java objects into database entities (also called ORM > Object Relational Mapping)
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     // postgreSQL so that java can make SQL queries during runtime
     runtimeOnly 'org.postgresql:postgresql'
 }
