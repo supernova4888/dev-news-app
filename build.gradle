@@ -4,3 +4,29 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/6.8.3/samples
  */
+
+// Properties
+
+// These are the extensions for this gradle project
+plugins {
+    // Enables gradle to work as a Spring app (it fetches things from the Spring library)
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    // it defines this as a JAVA project
+    id 'java'
+}
+
+// this defines where we want to get the dependencies
+repositories {
+    // commonly used location
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // JPA is what contains the 'hibernate' tool, which helps to map java objects into database entities (also called ORM > Object Relational Mapping)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // postgreSQL so that java can make SQL queries during runtime
+    runtimeOnly 'org.postgresql:postgresql'
+}
