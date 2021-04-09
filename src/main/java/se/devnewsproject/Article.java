@@ -16,6 +16,15 @@ public class Article {
     private String body;
     private String authorName;
 
+//    public Article(String title, String body, String authorName){
+//        this.title = title;
+//        this.body = body;
+//        this.authorName = authorName;
+//    }
+
+    public Article() {
+    }
+
     public Long getId() {
         return id;
     }
