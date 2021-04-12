@@ -18,11 +18,8 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Comment> comments;
 
-//    public Article(String title, String body, String authorName){
-//        this.title = title;
-//        this.body = body;
-//        this.authorName = authorName;
-//    }
+    @ManyToMany(mappedBy = "topics")
+    private List<Topics> topics;
 
     public Article() {
     }
