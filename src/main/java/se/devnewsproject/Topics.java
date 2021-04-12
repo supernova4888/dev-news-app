@@ -35,13 +35,4 @@ public class Topics {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-    public List<topicName> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<topicName> topics) {
-        this.topics = topics;
-    }
 }
