@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class CommentController {
@@ -16,14 +18,28 @@ public class CommentController {
         this.commentRepository = commentRepository;
         this.articleRepository = articleRepository;
     }
-//authorName
+
+    // todo: not tested
+    @GetMapping("/articles/{id}/comment")
+    public ResponseEntity<Comment> getCommentByArticleId(@PathVariable Long id) {
+        Comment comment = commentRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.ok(comment);
+    }
+
+    @GetMapping(value = "/comments", params = {"authorName"})
+    public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@RequestParam String authorName) {
+        List<Comment> articleComment = commentRepository.findByAuthorName(authorName);
+        return ResponseEntity.ok(articleComment);
+    }
+
+
     //findByauthorName
-    // ? actually the {articleID} here is just placeholder. Could it have any name?
-    // 'comments' come from Article - it is an endpoint
-    @PostMapping("/articles/{articleId}/comment")
-    public ResponseEntity<Comment> createComment (@PathVariable Long articleId, @RequestBody Comment comment){
+    @PostMapping("/articles/{id}/comment")
+    public ResponseEntity<Comment> createComment (@PathVariable Long id, @RequestBody Comment comment){
         Article article = articleRepository
-                .findById(articleId)
+                .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
         comment.setArticle(article);
         commentRepository.save(comment);
@@ -32,13 +48,26 @@ public class CommentController {
                 .body(comment);
     }
 
-//    @GetMapping("/articles/{articleId}/comment")
-//    public ResponseEntity<Comment> getCommentByArticleId(@PathVariable Long id) {
-//        Article article = articleRepository
-//            .findById(id)
-//            .orElseThrow(ResourceNotFoundException::new);
-//        return ResponseEntity.ok(comment);
-//}
+    // todo: not tested
+    @PutMapping("/comment/{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable Long id, @Valid @RequestBody Comment updatedComment) {
+        Comment comment = commentRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+        updatedComment.setId(id);
+        commentRepository.save(updatedComment);
+        return ResponseEntity.ok(updatedComment);
+    }
 
+    // delete the given article. After item is deleted it doesnt not update the generated ID
+    // todo: not tested
+    @DeleteMapping ("/comment/{id}")
+    public ResponseEntity<Comment> deleteArticle(@PathVariable Long id) {
+        Comment comment = commentRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+        commentRepository.delete(comment);
+        return ResponseEntity.ok(comment);
+    }
 
 }
