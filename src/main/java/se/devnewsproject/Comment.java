@@ -17,8 +17,17 @@ public class Comment {
     // relational databases work, in the code it is the Comment (MANY) who 'holds' the reference (foreign key) to the Article (ONE)
     private Article owner;
 
+
     public Comment() {
 
+    }
+
+    public Article getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Article owner) {
+        this.owner = owner;
     }
 
     public Long getId() {
