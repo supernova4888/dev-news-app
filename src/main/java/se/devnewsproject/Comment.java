@@ -15,7 +15,7 @@ public class Comment {
     @ManyToOne
     // logically speaking the Article should keep track of comments. But because of how
     // relational databases work, in the code it is the Comment (MANY) who 'holds' the reference (foreign key) to the Article (ONE)
-    private Article owner;
+    private Article article;
 
 
     public Comment() {
@@ -23,11 +23,11 @@ public class Comment {
     }
 
     public Article getOwner() {
-        return owner;
+        return article;
     }
 
-    public void setOwner(Article owner) {
-        this.owner = owner;
+    public void setOwner(Article article) {
+        this.article = article;
     }
 
     public Long getId() {

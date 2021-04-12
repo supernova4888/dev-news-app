@@ -18,10 +18,11 @@ services:
       - POSTGRES_PASSWORD=demo_pass
     ports:
       # port on our pc (outside container): port used inside docker container (5432 commonly used for db)
-      # TODO local host is SYNC with application.properties (docker).
+      # TODO make sure the local port is (LEFT) is SYNC with application.properties (docker).
       - "5430:5432"
     volumes:
       # enables us to save data
       - db-data:/var/lib/postgresql/data
+      -
 volumes:
   db-data:
