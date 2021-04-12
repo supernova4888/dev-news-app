@@ -3,16 +3,12 @@ package se.devnewsproject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CommentController {
 
     CommentRepository commentRepository;
-    // ?? why we need this one?
     ArticleRepository articleRepository;
 
     @Autowired
@@ -22,18 +18,27 @@ public class CommentController {
     }
 //authorName
     //findByauthorName
-    // ? actually the {articleID} here is just placeholder. It could have any name.dcom
+    // ? actually the {articleID} here is just placeholder. Could it have any name?
+    // 'comments' come from Article - it is an endpoint
     @PostMapping("/articles/{articleId}/comment")
-    public ResponseEntity<Comment> createComment (@PathVariable Long articleID, @RequestBody Comment comment){
+    public ResponseEntity<Comment> createComment (@PathVariable Long articleId, @RequestBody Comment comment){
         Article article = articleRepository
-                .findById(articleID)
+                .findById(articleId)
                 .orElseThrow(ResourceNotFoundException::new);
-        comment.setOwner(article);
+        comment.setArticle(article);
         commentRepository.save(comment);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(comment);
     }
+
+//    @GetMapping("/articles/{articleId}/comment")
+//    public ResponseEntity<Comment> getCommentByArticleId(@PathVariable Long id) {
+//        Article article = articleRepository
+//            .findById(id)
+//            .orElseThrow(ResourceNotFoundException::new);
+//        return ResponseEntity.ok(comment);
+//}
 
 
 }

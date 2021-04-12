@@ -23,6 +23,5 @@ services:
     volumes:
       # enables us to save data
       - db-data:/var/lib/postgresql/data
-      -
 volumes:
   db-data:

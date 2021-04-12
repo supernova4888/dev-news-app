@@ -1,5 +1,7 @@
 package se.devnewsproject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +14,9 @@ public class Comment {
     private String body;
     private String authorName;
 
+    // owning side
     @ManyToOne
+    //@JsonIgnore
     // logically speaking the Article should keep track of comments. But because of how
     // relational databases work, in the code it is the Comment (MANY) who 'holds' the reference (foreign key) to the Article (ONE)
     private Article article;
@@ -22,11 +26,11 @@ public class Comment {
 
     }
 
-    public Article getOwner() {
+    public Article getArticle() {
         return article;
     }
 
-    public void setOwner(Article article) {
+    public void setArticle(Article article) {
         this.article = article;
     }
 

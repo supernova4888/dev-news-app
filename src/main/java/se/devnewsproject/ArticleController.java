@@ -44,7 +44,7 @@ public class ArticleController {
     }
 
     // get specific article based on the provided id
-    @GetMapping ("/{id}")
+    @GetMapping ("/{articleId}")
     public ResponseEntity<Article> getArticle(@PathVariable Long id) {
         Article article = articleRepository
                 .findById(id)
@@ -53,7 +53,7 @@ public class ArticleController {
     }
 
     // update the given article
-    @PutMapping ("/{id}")
+    @PutMapping ("/{articleId}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
         articleRepository
                 .findById(id)
@@ -64,7 +64,7 @@ public class ArticleController {
     }
 
     // delete the given article. After item is deleted it doesnt not update the generated ID
-    @DeleteMapping ("/{id}")
+    @DeleteMapping ("/{articleId}")
     public ResponseEntity<Article> deleteArticle(@PathVariable Long id) {
         Article article = articleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         articleRepository.delete(article);
