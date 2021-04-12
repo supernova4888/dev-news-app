@@ -29,16 +29,16 @@ public class TopicsController {
 
     // todo: not tested
     @PostMapping("/articles/{id}/topics")
-    public ResponseEntity<Topics> associateTopicWithArticleById(@PathVariable Long id, @RequestBody Topics topic) {
+    public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long id, @RequestBody Topics topic) {
         Article article = articleRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
-        topicsRepository
+        topic = topicsRepository
                 .findById(id)
                 .orElse(topicsRepository.save(topic));
-        topic.setArticle(article);
-        topicsRepository.save(topic);
-        return ResponseEntity.status(HttpStatus.CREATED).body(topic);
+        article.getTopics().add(topic);
+        articleRepository.save(article);
+        return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }
 
     // Return all topics
@@ -89,6 +89,8 @@ public class TopicsController {
 
     // delete the association of a topic for the given article. The topic & article themselves remain.
     @DeleteMapping("/articles/{id}/topics/{id}")
-    public
+    public ResponseEntity<Article> deleteAssociationArticleTopic(@PathVariable Long id, @PathVariable Long id){
+        // how do I deal with two IDs?
+    }
 
 }

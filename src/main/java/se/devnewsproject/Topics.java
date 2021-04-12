@@ -10,23 +10,13 @@ public class Topics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    private List<Topics> topics;
-
-    private Article article;
+    @ManyToMany(mappedBy = "topics")
+    private List<Article> article;
 
     // Constructor
     public Topics(){
     }
 
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
 
     public Long getId() {
         return id;

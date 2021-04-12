@@ -18,11 +18,23 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Comment> comments;
 
-    @ManyToMany(mappedBy = "topics")
+    @ManyToMany
     private List<Topics> topics;
+
 
     public Article() {
     }
+
+
+    public List<Topics> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topics> topics) {
+        this.topics = topics;
+    }
+
+
 
     public Long getId() {
         return id;
