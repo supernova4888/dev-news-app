@@ -14,7 +14,8 @@ public class Article {
     private String body;
     private String authorName;
 
-    @OneToMany(mappedBy = "owner")
+    // this is controlled by Comments. In our example it is the 'owner'
+    @OneToMany(mappedBy = "article")
     private List<Comment> comments;
 
 //    public Article(String title, String body, String authorName){
