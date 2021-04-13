@@ -14,7 +14,8 @@ public class Article {
     private String body;
     private String authorName;
 
-    // this is controlled by Comments. In our example it is the 'owner'
+    // This is controlled by Comments. In our example it is the 'owner'
+    // Why is a list? It could have been any order array type, but the List is the most versatile in Java
     @OneToMany(mappedBy = "article")
     private List<Comment> comments;
 

@@ -28,12 +28,11 @@ public class TopicsController {
     }
 
     // associate the topic with the article given by articleId. If topic does not already exist, it is created
-    // @Pathvariable Long articleID, @Pathvariable Long topicID
     // todo: not tested
-    // The {id} name doesnt need to be the same as the Topic. Same variable in @postmapping and @pathvariable
+    // The {id} name doesn't need to be the same as the Topic Class neither between methods in the Controller. However, it needs to be consistent between @PostMapping and @Pathvariable/ @Param in the method
     @PostMapping("/articles/{articleId}/topics")
     public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long articleId, @RequestBody Topics topic) {
-        // if 1 or more operations in the database than save it on a single variable
+        // if 1 or more operations in the database than save it on a single variable: "Article article"
         Article article = articleRepository
                 .findById(articleId)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -41,6 +40,7 @@ public class TopicsController {
         List<Topics> searchedTopic = topicsRepository
                 .findByName(topic.getName());
         if (searchedTopic.isEmpty()) {
+            // If the topic doesn't exist -> create and save topic
             topicsRepository.save(topic);
         }
         article.getTopics().add(topic);
