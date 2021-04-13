@@ -14,9 +14,9 @@ public class Topics {
 
     private String name;
 
-    @ManyToMany(mappedBy = "topics")
+    @ManyToMany
     // cascade = CascadeType.PERSIST)
-    private List<Article> article;
+    private List<Article> articles;
 
     // Constructor
     public Topics(){
@@ -36,5 +36,9 @@ public class Topics {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Article> getArticle() {
+        return articles;
     }
 }

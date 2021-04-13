@@ -38,12 +38,18 @@ public class TopicsController {
         // 'find by name' is defined in TopicsRepository
         List<Topics> searchedTopic = topicsRepository
                 .findByName(topic.getName());
+        Topics topica;
         if (searchedTopic.isEmpty()) {
             // If the topic doesn't exist -> create and save topic
-            topicsRepository.save(topic);
+            topica = topicsRepository.save(topic);
+        } else {
+            topica = searchedTopic.get(0);
         }
-        article.getTopics().add(topic);
-        articleRepository.save(article);
+        topica.getArticle().add(article);
+        topicsRepository.save(topica);
+
+//        article.getTopics().add(topic);
+//        articleRepository.save(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }
 
@@ -91,10 +97,9 @@ public class TopicsController {
                 .findById(topicsId)
                 .orElseThrow(ResourceNotFoundException::new);
         topicsRepository.delete(topic);
-        return ResponseEntity.ok(topic);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // todo: deletes but "get all articles" doesnt update
     // delete the association of a topic for the given article. The topic & article themselves remain.
     @DeleteMapping("/articles/{articleId}/topics/{topicsId}")
     public ResponseEntity<Article> deleteAssociationOfArticleTopic(@PathVariable Long articleId, @PathVariable Long topicsId) {
