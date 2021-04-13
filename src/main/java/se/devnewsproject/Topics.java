@@ -1,5 +1,6 @@
 package se.devnewsproject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -19,8 +20,9 @@ public class Topics {
 
     // owner of the many-to-many relationship. Where changes should be made
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToMany
+    @ManyToMany(mappedBy = "topics")
     // cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Article> articles;
 
     // Constructor
@@ -43,6 +45,7 @@ public class Topics {
         this.name = name;
     }
 
+    @JsonIgnore
     public List<Article> getArticle() {
         return articles;
     }

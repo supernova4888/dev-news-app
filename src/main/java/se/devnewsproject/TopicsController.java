@@ -38,20 +38,9 @@ public class TopicsController {
         // 'find by name' is defined in TopicsRepository
         List<Topics> searchedTopic = topicsRepository
                 .findByName(topic.getName());
-        // Topics topica;
         if (searchedTopic.isEmpty()) {
-            // If the topic doesn't exist -> create and save topic
-            //topica = topicsRepository.save(topic);
             topicsRepository.save(topic);
         }
-
-//        } else {
-//            topica = searchedTopic.get(0);
-//        }
-//        topica.getArticle().add(article);
-//        topicsRepository.save(topica);
-        // the owner is the one controlling. Topics is owner now
-
         article.getTopics().add(topic);
         articleRepository.save(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
@@ -75,10 +64,13 @@ public class TopicsController {
         return ResponseEntity.ok(topics);
     }
 
+    // return all articles associated with the topic given by topicId.
     @GetMapping("/topics/{topicsId}/articles")
     public ResponseEntity<List<Article>> getArticleByTopicId(@PathVariable Long topicsId){
-        Topics topic = topicsRepository.findById(topicsId).orElseThrow(ResourceNotFoundException::new);
-        List<Article> article = articleRepository.findAll();
+        Topics topic = topicsRepository
+                .findById(topicsId)
+                .orElseThrow(ResourceNotFoundException::new);
+        List<Article> article = topic.getArticle();
         return ResponseEntity.ok(article);
     }
 
@@ -110,6 +102,7 @@ public class TopicsController {
         Topics topic = topicsRepository.findById(topicsId).orElseThrow(ResourceNotFoundException::new);
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
         article.getTopics().remove(topic);
+        articleRepository.save(article);
         return ResponseEntity.ok(article);
     }
 }

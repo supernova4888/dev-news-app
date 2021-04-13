@@ -19,7 +19,7 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Comment> comments;
 
-    @ManyToMany(mappedBy = "articles")
+    @ManyToMany
     private List<Topics> topics;
 
 

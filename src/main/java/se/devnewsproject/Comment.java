@@ -22,8 +22,8 @@ public class Comment {
     @ManyToOne
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    // @JoinColumn(nullable = false)
-    // @NotNull
+    @JoinColumn(nullable = false)
+    @NotNull
     // logically speaking the Article should keep track of comments. But because of how
     // relational databases work, in the code it is the Comment (MANY) who 'holds' the reference (foreign key) to the Article (ONE)
     private Article article;
