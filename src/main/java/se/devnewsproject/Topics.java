@@ -14,7 +14,8 @@ public class Topics {
 
     private String name;
 
-    @ManyToMany(mappedBy = "topics", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "topics")
+    // cascade = CascadeType.PERSIST)
     private List<Article> article;
 
     // Constructor

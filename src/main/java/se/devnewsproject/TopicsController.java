@@ -56,26 +56,31 @@ public class TopicsController {
     }
 
     // todo
-    // not working !!!
+    // 15:52 - iteration two
+    // not working !!! 15:52 - iteration two
     // I get the topic id and info
     // return all topics associated w/ article given by articleID
     @GetMapping("/articles/{articleId}/topics")
-    public ResponseEntity<Topics> getTopicsByArticleId(@PathVariable Long articleId) {
-        Topics topic = topicsRepository
-                .findById(articleId)
-                .orElseThrow(ResourceNotFoundException::new);
-        return ResponseEntity.ok(topic);
+    public ResponseEntity<List<Topics>> getTopicsByArticleId(@PathVariable Long articleId) {
+        // link to the article repository (where there is a list of topics)
+        List<Topics> topics = topicsRepository.findAll();
+        return ResponseEntity.ok(topics);
     }
 
     // todo
+    // 15:52 - iteration two - return article list associated with topic ID given
+
     // this is NOT working for when you choose an article, you return the entire thing incl. topics
     // return all articles associated with the topic given by topicID
     @GetMapping("/topics/{topicsId}/articles")
-    public ResponseEntity<Article> getArticleByTopicId(@PathVariable Long topicsId){
-        Article article = articleRepository
-                .findById(topicsId)
-                .orElseThrow(ResourceNotFoundException::new);
-        return ResponseEntity.ok(article);
+    public ResponseEntity<List<Article>> getArticleByTopicId(@PathVariable Long topicsId){
+        List<Article> articles = articleRepository.findAll();
+        return ResponseEntity.ok(articles);
+//
+//        Article article = articleRepository
+//                .findById(topicsId)
+//                .orElseThrow(ResourceNotFoundException::new);
+//        return ResponseEntity.ok(article);
     }
 
     // update the given topic.
