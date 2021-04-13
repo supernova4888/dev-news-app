@@ -20,12 +20,6 @@ Dependencies:
  
 Implemented functionalities
 
-HTTP Method	HTTP Path	Action
-GET	/articles	return all articles.
-GET	/articles/{id}	return a specific article based on the provided id.
-POST	/articles	create a new article.
-PUT	/articles/{id}	update the given article.
-DELETE	/articles/{id}	delete the given article.
 
 Testing
 > Performed using requests in Postman
