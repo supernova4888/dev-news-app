@@ -19,7 +19,8 @@ public class CommentController {
         this.articleRepository = articleRepository;
     }
 
-    // todo: not tested
+    // todo: getting only one comment. FIX.
+    // RETURNS ONLY THE ID 1 OF ARTICLE. IT SHOULD MAP AND RETURN ALL COMMENTS.
     // return all comments on article given by articleId.
     @GetMapping("/articles/{id}/comment")
     public ResponseEntity<Comment> getCommentByArticleId(@PathVariable Long id) {
@@ -36,7 +37,6 @@ public class CommentController {
         return ResponseEntity.ok(articleComment);
     }
 
-
     //create a new comment on article given by articleId.
     @PostMapping("/articles/{id}/comment")
     public ResponseEntity<Comment> createComment (@PathVariable Long id, @RequestBody Comment comment){
@@ -50,7 +50,8 @@ public class CommentController {
                 .body(comment);
     }
 
-    // todo: not tested
+    // todo: not tested. NOT WORKING
+    // Error: 500: internal server error
     // update the given comment.
     @PutMapping("/comment/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Long id, @Valid @RequestBody Comment updatedComment) {
@@ -63,7 +64,6 @@ public class CommentController {
     }
 
     // delete the given comment. After item is deleted it doesnt not update the generated ID
-    // todo: not tested
     @DeleteMapping ("/comment/{id}")
     public ResponseEntity<Comment> deleteArticle(@PathVariable Long id) {
         Comment comment = commentRepository
