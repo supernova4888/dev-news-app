@@ -55,16 +55,15 @@ public class TopicsController {
         return topics;
     }
 
-    // todo
-    // 15:52 - iteration two
-    // not working !!! 15:52 - iteration two
-    // I get the topic id and info
     // return all topics associated w/ article given by articleID
     @GetMapping("/articles/{articleId}/topics")
     public ResponseEntity<List<Topics>> getTopicsByArticleId(@PathVariable Long articleId) {
-        // link to the article repository (where there is a list of topics)
-        List<Topics> topics = topicsRepository.findAll();
+        Article article = articleRepository
+                .findById(articleId)
+                .orElseThrow(ResourceNotFoundException::new);
+        List<Topics> topics = article.getTopics();
         return ResponseEntity.ok(topics);
+
     }
 
     // todo
