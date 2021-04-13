@@ -38,18 +38,22 @@ public class TopicsController {
         // 'find by name' is defined in TopicsRepository
         List<Topics> searchedTopic = topicsRepository
                 .findByName(topic.getName());
-        Topics topica;
+        // Topics topica;
         if (searchedTopic.isEmpty()) {
             // If the topic doesn't exist -> create and save topic
-            topica = topicsRepository.save(topic);
-        } else {
-            topica = searchedTopic.get(0);
+            //topica = topicsRepository.save(topic);
+            topicsRepository.save(topic);
         }
-        topica.getArticle().add(article);
-        topicsRepository.save(topica);
 
-//        article.getTopics().add(topic);
-//        articleRepository.save(article);
+//        } else {
+//            topica = searchedTopic.get(0);
+//        }
+//        topica.getArticle().add(article);
+//        topicsRepository.save(topica);
+        // the owner is the one controlling. Topics is owner now
+
+        article.getTopics().add(topic);
+        articleRepository.save(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }
 

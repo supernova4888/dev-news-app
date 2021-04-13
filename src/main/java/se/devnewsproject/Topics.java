@@ -1,5 +1,8 @@
 package se.devnewsproject;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +17,8 @@ public class Topics {
 
     private String name;
 
+    // owner of the many-to-many relationship. Where changes should be made
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToMany
     // cascade = CascadeType.PERSIST)
     private List<Article> articles;
