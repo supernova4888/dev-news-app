@@ -19,14 +19,10 @@ public class CommentController {
         this.articleRepository = articleRepository;
     }
 
-    // todo: getting only one comment. FIX.
-    // RETURNS ONLY THE ID 1 OF ARTICLE. IT SHOULD MAP AND RETURN ALL COMMENTS.
     // return all comments on article given by articleId.
     @GetMapping("/articles/{id}/comment")
-    public ResponseEntity<Comment> getCommentByArticleId(@PathVariable Long id) {
-        Comment comment = commentRepository
-                .findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+    public ResponseEntity<List<Comment>> getCommentByArticleId(@PathVariable Long id) {
+        List<Comment> comment = commentRepository.findAll();
         return ResponseEntity.ok(comment);
     }
 
@@ -53,14 +49,15 @@ public class CommentController {
     // todo: not tested. NOT WORKING
     // Error: 500: internal server error
     // update the given comment.
+    // removed @Valid, and it didnt work
     @PutMapping("/comment/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Long id, @Valid @RequestBody Comment updatedComment) {
         Comment comment = commentRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
         updatedComment.setId(id);
-        commentRepository.save(updatedComment);
-        return ResponseEntity.ok(updatedComment);
+        Comment savedComment = commentRepository.save(updatedComment);
+        return ResponseEntity.ok(savedComment);
     }
 
     // delete the given comment. After item is deleted it doesnt not update the generated ID

@@ -19,8 +19,8 @@ public class TopicsController {
         this.articleRepository = articleRepository;
     }
 
-    // create a new topic
     // todo: disallow for duplication?
+    // create a new topic
     @PostMapping("/topics")
     public ResponseEntity<Topics> createTopic(@RequestBody Topics topic) {
         topicsRepository.save(topic);
@@ -28,7 +28,6 @@ public class TopicsController {
     }
 
     // associate the topic with the article given by articleId. If topic does not already exist, it is created
-    // todo: not tested
     // The {id} name doesn't need to be the same as the Topic Class neither between methods in the Controller. However, it needs to be consistent between Method's @PostMapping and @PathVariable/ @Param and in the Body
     @PostMapping("/articles/{articleId}/topics")
     public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long articleId, @RequestBody Topics topic) {
@@ -56,6 +55,9 @@ public class TopicsController {
         return topics;
     }
 
+    // todo
+    // not working !!!
+    // I get the topic id and info
     // return all topics associated w/ article given by articleID
     @GetMapping("/articles/{articleId}/topics")
     public ResponseEntity<Topics> getTopicsByArticleId(@PathVariable Long articleId) {
@@ -65,6 +67,8 @@ public class TopicsController {
         return ResponseEntity.ok(topic);
     }
 
+    // todo
+    // this is NOT working for when you choose an article, you return the entire thing incl. topics
     // return all articles associated with the topic given by topicID
     @GetMapping("/topics/{topicsId}/articles")
     public ResponseEntity<Article> getArticleByTopicId(@PathVariable Long topicsId){
@@ -96,6 +100,7 @@ public class TopicsController {
         return ResponseEntity.ok(topic);
     }
 
+    // todo: deletes but "get all articles" doesnt update
     // delete the association of a topic for the given article. The topic & article themselves remain.
     @DeleteMapping("/articles/{articleId}/topics/{topicsId}")
     public ResponseEntity<Article> deleteAssociationOfArticleTopic(@PathVariable Long articleId, @PathVariable Long topicsId) {
