@@ -27,15 +27,22 @@ public class TopicsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(topic);
     }
 
+    // associate the topic with the article given by articleId. If topic does not already exist, it is created
+    // @Pathvariable Long articleID, @Pathvariable Long topicID
     // todo: not tested
-    @PostMapping("/articles/{id}/topics")
-    public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long id, @RequestBody Topics topic) {
+    // The {id} name doesnt need to be the same as the Topic. Same variable in @postmapping and @pathvariable
+    @PostMapping("/articles/{articleId}/topics")
+    public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long articleId, @RequestBody Topics topic) {
+        // if 1 or more operations in the database than save it on a single variable
         Article article = articleRepository
-                .findById(id)
+                .findById(articleId)
                 .orElseThrow(ResourceNotFoundException::new);
-        topic = topicsRepository
-                .findById(id)
-                .orElse(topicsRepository.save(topic));
+        // 'find by name' is defined in TopicsRepository
+        List<Topics> searchedTopic = topicsRepository
+                .findByName(topic.getName());
+        if (searchedTopic.isEmpty()) {
+            topicsRepository.save(topic);
+        }
         article.getTopics().add(topic);
         articleRepository.save(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
@@ -88,9 +95,12 @@ public class TopicsController {
     }
 
     // delete the association of a topic for the given article. The topic & article themselves remain.
-    @DeleteMapping("/articles/{id}/topics/{id}")
-    public ResponseEntity<Article> deleteAssociationArticleTopic(@PathVariable Long id, @PathVariable Long id){
-        // how do I deal with two IDs?
+    @DeleteMapping("/articles/{articleId}/topics/{topicsId}")
+    public ResponseEntity<Article> deleteAssociationArticleTopic(@PathVariable Long articleId, @PathVariable Long topicsId) {
+        Topics topic = topicsRepository.findById(topicsId).orElseThrow(ResourceNotFoundException::new);
+        Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
+        article.getTopics().remove(topicsId);
+        return ResponseEntity.ok(article);
     }
 
 }
