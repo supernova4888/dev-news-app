@@ -24,7 +24,8 @@ public class ArticleController {
     // todo : ? how come im able to do List? Guess: I think its because Article is an Entity. So this gets some in-built methods from Spring
     @GetMapping("")
     public List<Article> listAllArticles(){
-        List<Article> article = articleRepository.findAll();
+        List<Article> article;
+        article = articleRepository.findAll();
         return article;
     }
 
@@ -36,7 +37,7 @@ public class ArticleController {
     @PostMapping ("")
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         // call repository and save the article-external-input there
-        // NOTE: you don't need to create an object when posting bacause you do it in the request body
+        // NOTE: you don't need to create an object when posting because you do it in the request body
         articleRepository.save(article);
         // connect the output to a HTTP response
         // ? why does ResponseEntity needs to be in the method declaration?

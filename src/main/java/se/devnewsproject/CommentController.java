@@ -35,7 +35,7 @@ public class CommentController {
     }
 
 
-    //findByauthorName
+    //find ByauthorName
     @PostMapping("/articles/{id}/comment")
     public ResponseEntity<Comment> createComment (@PathVariable Long id, @RequestBody Comment comment){
         Article article = articleRepository

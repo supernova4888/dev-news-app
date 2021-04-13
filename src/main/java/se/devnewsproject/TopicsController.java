@@ -29,7 +29,7 @@ public class TopicsController {
 
     // associate the topic with the article given by articleId. If topic does not already exist, it is created
     // todo: not tested
-    // The {id} name doesn't need to be the same as the Topic Class neither between methods in the Controller. However, it needs to be consistent between @PostMapping and @PathVariable/ @Param in the method
+    // The {id} name doesn't need to be the same as the Topic Class neither between methods in the Controller. However, it needs to be consistent between Method's @PostMapping and @PathVariable/ @Param and in the Body
     @PostMapping("/articles/{articleId}/topics")
     public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long articleId, @RequestBody Topics topic) {
         // if 1 or more operations in the database than save it on a single variable: "Article article"
@@ -57,39 +57,40 @@ public class TopicsController {
     }
 
     // return all topics associated w/ article given by articleID
-    @GetMapping("/articles/{id}/topics")
-    public ResponseEntity<Topics> getTopicsByArticleId(@PathVariable Long id) {
+    @GetMapping("/articles/{articleId}/topics")
+    public ResponseEntity<Topics> getTopicsByArticleId(@PathVariable Long articleId) {
         Topics topic = topicsRepository
-                .findById(id)
+                .findById(articleId)
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(topic);
     }
 
     // return all articles associated with the topic given by topicID
-    @GetMapping("/topics/{id}/articles")
-    public ResponseEntity<Article> getArticleByTopicId(@PathVariable Long id){
+    @GetMapping("/topics/{topicsId}/articles")
+    public ResponseEntity<Article> getArticleByTopicId(@PathVariable Long topicsId){
         Article article = articleRepository
-                .findById(id)
+                .findById(topicsId)
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.ok(article);
     }
 
     // update the given topic.
-    @PutMapping("/topics/{id}")
-    public ResponseEntity<Topics> updateTopic(@PathVariable Long id, @RequestBody Topics updatedTopic){
+    @PutMapping("/topics/{topicsId}")
+    public ResponseEntity<Topics> updateTopic(@PathVariable Long topicsId, @RequestBody Topics updatedTopic){
         topicsRepository
-                .findById(id)
+                .findById(topicsId)
                 .orElseThrow(ResourceNotFoundException::new);
-        updatedTopic.setId(id);
+        // todo: what doest setId do again?
+        updatedTopic.setId(topicsId);
         Topics topic = topicsRepository.save(updatedTopic);
         return ResponseEntity.ok(topic);
     }
 
     // delete the given topic.
-    @DeleteMapping("/topics/{id}")
-    public ResponseEntity<Topics> deleteTopic(@PathVariable Long id){
+    @DeleteMapping("/topics/{topicsId}")
+    public ResponseEntity<Topics> deleteTopic(@PathVariable Long topicsId){
         Topics topic = topicsRepository
-                .findById(id)
+                .findById(topicsId)
                 .orElseThrow(ResourceNotFoundException::new);
         topicsRepository.delete(topic);
         return ResponseEntity.ok(topic);
