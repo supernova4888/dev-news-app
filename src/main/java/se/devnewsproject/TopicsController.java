@@ -63,23 +63,13 @@ public class TopicsController {
                 .orElseThrow(ResourceNotFoundException::new);
         List<Topics> topics = article.getTopics();
         return ResponseEntity.ok(topics);
-
     }
 
-    // todo
-    // 15:52 - iteration two - return article list associated with topic ID given
-
-    // this is NOT working for when you choose an article, you return the entire thing incl. topics
-    // return all articles associated with the topic given by topicID
     @GetMapping("/topics/{topicsId}/articles")
     public ResponseEntity<List<Article>> getArticleByTopicId(@PathVariable Long topicsId){
-        List<Article> articles = articleRepository.findAll();
-        return ResponseEntity.ok(articles);
-//
-//        Article article = articleRepository
-//                .findById(topicsId)
-//                .orElseThrow(ResourceNotFoundException::new);
-//        return ResponseEntity.ok(article);
+        Topics topic = topicsRepository.findById(topicsId).orElseThrow(ResourceNotFoundException::new);
+        List<Article> article = articleRepository.findAll();
+        return ResponseEntity.ok(article);
     }
 
     // update the given topic.
@@ -112,6 +102,5 @@ public class TopicsController {
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
         article.getTopics().remove(topic);
         return ResponseEntity.ok(article);
-
     }
 }
