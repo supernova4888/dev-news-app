@@ -30,7 +30,6 @@ public class ArticleController {
 
     // post a new article
     // 1. call spring Class 'ResponseEntity'
-    // todo practice: I just remembered the 'save' part. From the lecture.
     @PostMapping ("")
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         // call repository and save the article-external-input there

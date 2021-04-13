@@ -18,10 +18,8 @@ public class Topics {
 
     private String name;
 
-    // owner of the many-to-many relationship. Where changes should be made
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToMany(mappedBy = "topics")
-    // cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<Article> articles;
 

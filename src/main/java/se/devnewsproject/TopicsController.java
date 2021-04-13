@@ -39,9 +39,10 @@ public class TopicsController {
         List<Topics> searchedTopic = topicsRepository
                 .findByName(topic.getName());
         if (searchedTopic.isEmpty()) {
-            topicsRepository.save(topic);
+            Topics temp = topicsRepository.save(topic);
+            searchedTopic.add(temp);
         }
-        article.getTopics().add(topic);
+        article.getTopics().add(searchedTopic.get(0));
         articleRepository.save(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(article);
     }

@@ -1,4 +1,6 @@
 package se.devnewsproject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,7 +27,6 @@ public class Article {
 
     public Article() {
     }
-
 
     public List<Topics> getTopics() {
         return topics;
