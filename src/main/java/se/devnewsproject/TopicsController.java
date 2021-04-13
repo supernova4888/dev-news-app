@@ -29,7 +29,7 @@ public class TopicsController {
 
     // associate the topic with the article given by articleId. If topic does not already exist, it is created
     // todo: not tested
-    // The {id} name doesn't need to be the same as the Topic Class neither between methods in the Controller. However, it needs to be consistent between @PostMapping and @Pathvariable/ @Param in the method
+    // The {id} name doesn't need to be the same as the Topic Class neither between methods in the Controller. However, it needs to be consistent between @PostMapping and @PathVariable/ @Param in the method
     @PostMapping("/articles/{articleId}/topics")
     public ResponseEntity<Article> associateTopicWithArticleById(@PathVariable Long articleId, @RequestBody Topics topic) {
         // if 1 or more operations in the database than save it on a single variable: "Article article"
@@ -51,7 +51,8 @@ public class TopicsController {
     // Return all topics
     @GetMapping("/topics")
     public List<Topics> listAllTopics(){
-        List<Topics> topics = topicsRepository.findAll();
+        List<Topics> topics;
+        topics = topicsRepository.findAll();
         return topics;
     }
 
@@ -76,12 +77,12 @@ public class TopicsController {
     // update the given topic.
     @PutMapping("/topics/{id}")
     public ResponseEntity<Topics> updateTopic(@PathVariable Long id, @RequestBody Topics updatedTopic){
-        Topics topics = topicsRepository
+        topicsRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
         updatedTopic.setId(id);
-        topicsRepository.save(updatedTopic);
-        return ResponseEntity.ok(updatedTopic);
+        Topics topic = topicsRepository.save(updatedTopic);
+        return ResponseEntity.ok(topic);
     }
 
     // delete the given topic.
@@ -96,11 +97,11 @@ public class TopicsController {
 
     // delete the association of a topic for the given article. The topic & article themselves remain.
     @DeleteMapping("/articles/{articleId}/topics/{topicsId}")
-    public ResponseEntity<Article> deleteAssociationArticleTopic(@PathVariable Long articleId, @PathVariable Long topicsId) {
+    public ResponseEntity<Article> deleteAssociationOfArticleTopic(@PathVariable Long articleId, @PathVariable Long topicsId) {
         Topics topic = topicsRepository.findById(topicsId).orElseThrow(ResourceNotFoundException::new);
         Article article = articleRepository.findById(articleId).orElseThrow(ResourceNotFoundException::new);
-        article.getTopics().remove(topicsId);
+        article.getTopics().remove(topic);
         return ResponseEntity.ok(article);
-    }
 
+    }
 }
