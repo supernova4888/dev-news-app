@@ -20,6 +20,7 @@ public class CommentController {
     }
 
     // todo: not tested
+    // return all comments on article given by articleId.
     @GetMapping("/articles/{id}/comment")
     public ResponseEntity<Comment> getCommentByArticleId(@PathVariable Long id) {
         Comment comment = commentRepository
@@ -28,6 +29,7 @@ public class CommentController {
         return ResponseEntity.ok(comment);
     }
 
+    // return all comments made by author given by authorName.
     @GetMapping(value = "/comments", params = {"authorName"})
     public ResponseEntity<List<Comment>> viewAllCommentsByAuthor(@RequestParam String authorName) {
         List<Comment> articleComment = commentRepository.findByAuthorName(authorName);
@@ -35,7 +37,7 @@ public class CommentController {
     }
 
 
-    //find ByauthorName
+    //create a new comment on article given by articleId.
     @PostMapping("/articles/{id}/comment")
     public ResponseEntity<Comment> createComment (@PathVariable Long id, @RequestBody Comment comment){
         Article article = articleRepository
@@ -49,6 +51,7 @@ public class CommentController {
     }
 
     // todo: not tested
+    // update the given comment.
     @PutMapping("/comment/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Long id, @Valid @RequestBody Comment updatedComment) {
         Comment comment = commentRepository
@@ -59,7 +62,7 @@ public class CommentController {
         return ResponseEntity.ok(updatedComment);
     }
 
-    // delete the given article. After item is deleted it doesnt not update the generated ID
+    // delete the given comment. After item is deleted it doesnt not update the generated ID
     // todo: not tested
     @DeleteMapping ("/comment/{id}")
     public ResponseEntity<Comment> deleteArticle(@PathVariable Long id) {

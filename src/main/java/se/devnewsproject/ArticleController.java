@@ -13,7 +13,7 @@ public class ArticleController {
 
     ArticleRepository articleRepository;
 
-    // ? is this what connects the repo-interface to this controller?
+    // this is what connects the repo-interface to this controller
     // Autowired: finds a class impl in Spring that impls the repository. So, spring creates classes auto when it runs
     @Autowired
     public ArticleController(ArticleRepository articleRepository) {
@@ -21,15 +21,12 @@ public class ArticleController {
     }
 
     //get all articles
-    // todo : ? how come im able to do List? Guess: I think its because Article is an Entity. So this gets some in-built methods from Spring
     @GetMapping("")
     public List<Article> listAllArticles(){
         List<Article> article;
         article = articleRepository.findAll();
         return article;
     }
-
-    // todo : i didnt do a docker exec command - do i need to connect the database? only if you want to check
 
     // post a new article
     // 1. call spring Class 'ResponseEntity'
